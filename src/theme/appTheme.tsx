@@ -8,16 +8,19 @@ export const styles = StyleSheet.create({
     CalculatorContainer: {
         flex: 1,
         justifyContent: 'flex-end',
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
     },
     result: {
         color: '#fff',
         fontSize: 60,
         textAlign: 'right',
+        marginBottom: 20,
+        marginRight: 20
     },
     smallResult: {
         color: 'rgba(255, 255, 255, 0.5)',
         fontSize: 30,
+        marginRight: 20,
         textAlign: 'right',
     },
 
@@ -27,12 +30,12 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         marginBottom: 10,
-        paddingHorizontal: 10
+        paddingHorizontal: 20
     },
     button: {
         height: 70,
         width: 70,
-        marginHorizontal: 5,
+        marginHorizontal: 10,
         backgroundColor: '#9b9b9b',
         borderRadius: 100,
         justifyContent: 'center',
