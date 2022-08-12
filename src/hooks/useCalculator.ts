@@ -10,7 +10,7 @@ enum Operations {
 
 export const useCalculator = () => {
 
-    const [number, setNumber] = useState('100');
+    const [number, setNumber] = useState('0');
     const [prevNumber, setPrevNumber] = useState('0');
 
     const LastOperation = useRef<Operations>();
@@ -19,6 +19,7 @@ export const useCalculator = () => {
     const clear = () => {
         setNumber('0');
         setPrevNumber('0');
+        LastOperation.current = undefined;
     }
 
     const clearLastInput = () => {
@@ -43,6 +44,8 @@ export const useCalculator = () => {
         if( textBtn === '.' && !number.includes('.') ) setNumber(number + '.');
         else
         if( textBtn !== '.' ) setNumber(number + textBtn);
+
+        // console.log({number,})
     }
 
     const changeNumberByPrev = () => {
@@ -55,6 +58,7 @@ export const useCalculator = () => {
 
     const btnDivition = () => {
         changeNumberByPrev();
+        calcular();
         LastOperation.current = Operations.DIVISION;
     }
     const btnMultiplication = () => {
@@ -66,6 +70,7 @@ export const useCalculator = () => {
         LastOperation.current = Operations.SUBTRACTION;
     }
     const btnAdition = () => {
+        calcular();
         changeNumberByPrev();
         LastOperation.current = Operations.ADDITION;
     }
@@ -77,19 +82,29 @@ export const useCalculator = () => {
         switch( LastOperation.current ) {
             case Operations.ADDITION:
                 setNumber( `${n1 + n2}` );
+                setPrevNumber('0');
+                LastOperation.current = undefined;
                 break;
             case Operations.SUBTRACTION:
                 setNumber( `${n1 - n2}` );
+                setPrevNumber('0');
+                LastOperation.current = undefined;
                 break;
             case Operations.MULTIPLICATION:
                 setNumber( `${n1 * n2}` );
+                setPrevNumber('0');
+                LastOperation.current = undefined;
                 break;
             case Operations.DIVISION:
                 setNumber( `${n1 / n2}` );
+                setPrevNumber('0');
+                LastOperation.current = undefined;
                 break;
             default:
-                return;
+                break;
         }
+    
+        // console.log({number, prevNumber})
     }
 
   return {
@@ -105,6 +120,7 @@ export const useCalculator = () => {
     btnSubstraction,
     btnAdition,
     calcular,
+    lastOperation: LastOperation.current,
   }
 
 }

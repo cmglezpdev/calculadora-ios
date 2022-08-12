@@ -47,5 +47,11 @@ export const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: '300',
     },
+    operation: {
+        color: 'rgba(255, 255, 255, 0.5)',
+        fontSize: 25,
+        alignSelf: 'flex-end',
+        marginRight: 25
+    }
 
 })
