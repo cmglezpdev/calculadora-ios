@@ -11,7 +11,7 @@ export const CalculatorScreen = () => {
     const { 
         number, prevNumber, 
         btnAdition, btnSubstraction, btnDivition, btnMultiplication, 
-        clear, clearLastInput, sign, buildNumber, calcular,
+        clear, clearLastInput, sign, buildNumber, btnEqual,
         lastOperation 
     } = useCalculator();
 
@@ -30,7 +30,7 @@ export const CalculatorScreen = () => {
             <Buttons
                 methodsCalculator={{
                     btnAdition, btnSubstraction, btnDivition, btnMultiplication,
-                    clear, clearLastInput, sign, buildNumber, calcular
+                    clear, clearLastInput, sign, buildNumber, btnEqual
                 }}
             />
 

@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 enum Operations {
     ADDITION = '+',
     SUBTRACTION = '-',
     MULTIPLICATION = '*',
     DIVISION = '/',
+    EQUAL = '=',
 }
 
 
@@ -12,9 +13,7 @@ export const useCalculator = () => {
 
     const [number, setNumber] = useState('0');
     const [prevNumber, setPrevNumber] = useState('0');
-
     const LastOperation = useRef<Operations>();
-
 
     const clear = () => {
         setNumber('0');
@@ -44,67 +43,78 @@ export const useCalculator = () => {
         if( textBtn === '.' && !number.includes('.') ) setNumber(number + '.');
         else
         if( textBtn !== '.' ) setNumber(number + textBtn);
-
-        // console.log({number,})
     }
 
-    const changeNumberByPrev = () => {
-        if( number.endsWith('.') )
-            setPrevNumber( number.slice(0, -1) );
+    const changeNumberByPrev = ( num = '0' ) => {
+        if( num.endsWith('.') )
+            setPrevNumber( num.slice(0, -1) );
         else
-            setPrevNumber( number );
+            setPrevNumber( num );
         setNumber( '0' );
     }
 
     const btnDivition = () => {
-        changeNumberByPrev();
-        calcular();
-        LastOperation.current = Operations.DIVISION;
+        if( number === '0' ) LastOperation.current = Operations.DIVISION;
+        else {
+            const v = calcular();
+            changeNumberByPrev(v);
+            LastOperation.current = Operations.DIVISION;
+        }
     }
     const btnMultiplication = () => {
-        changeNumberByPrev();
-        LastOperation.current = Operations.MULTIPLICATION;
+        if( number === '0' ) LastOperation.current =Operations.MULTIPLICATION;
+        else {
+            const v = calcular();
+            changeNumberByPrev(v);
+            LastOperation.current = Operations.MULTIPLICATION;
+        }
     }
     const btnSubstraction = () => {
-        changeNumberByPrev();
-        LastOperation.current = Operations.SUBTRACTION;
+        if( number === '0' ) LastOperation.current =Operations.SUBTRACTION;
+        else {
+            const v = calcular();
+            changeNumberByPrev(v);
+            LastOperation.current = Operations.SUBTRACTION;
+        }
     }
     const btnAdition = () => {
-        calcular();
-        changeNumberByPrev();
-        LastOperation.current = Operations.ADDITION;
+        if( number === '0' ) LastOperation.current =Operations.ADDITION;
+        else {
+            const v = calcular();
+            changeNumberByPrev(v);
+            LastOperation.current = Operations.ADDITION;
+        }
     }
 
-    const calcular = () => {
+    const btnEqual = () => {
+        const v = calcular();
+        setNumber( v );
+        setPrevNumber('0');
+        LastOperation.current = undefined;
+    }
+
+
+    const calcular = ():string => {
         const n1 = Number(prevNumber);
         const n2 = Number(number);
 
         switch( LastOperation.current ) {
             case Operations.ADDITION:
-                setNumber( `${n1 + n2}` );
-                setPrevNumber('0');
-                LastOperation.current = undefined;
-                break;
+                return `${n1 + n2}`;
+
             case Operations.SUBTRACTION:
-                setNumber( `${n1 - n2}` );
-                setPrevNumber('0');
-                LastOperation.current = undefined;
-                break;
+                return `${n1 - n2}`;
+
             case Operations.MULTIPLICATION:
-                setNumber( `${n1 * n2}` );
-                setPrevNumber('0');
-                LastOperation.current = undefined;
-                break;
+                return `${n1 * n2}`;
+
             case Operations.DIVISION:
-                setNumber( `${n1 / n2}` );
-                setPrevNumber('0');
-                LastOperation.current = undefined;
-                break;
+                return `${n1 / n2}`;
+
             default:
-                break;
+                return number;
         }
     
-        // console.log({number, prevNumber})
     }
 
   return {
@@ -119,7 +129,7 @@ export const useCalculator = () => {
     btnMultiplication,
     btnSubstraction,
     btnAdition,
-    calcular,
+    btnEqual,
     lastOperation: LastOperation.current,
   }
 

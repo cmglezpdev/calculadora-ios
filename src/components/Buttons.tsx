@@ -13,7 +13,7 @@ interface Props {
         clearLastInput: () => void;
         sign: () => void;
         buildNumber: ( number:string ) => void;
-        calcular: () => void;
+        btnEqual: () => void;
     }
 }
 
@@ -21,7 +21,7 @@ export const Buttons = ({ methodsCalculator }:Props) => {
 
     const {
         btnAdition, btnSubstraction, btnDivition, btnMultiplication,
-        clear, clearLastInput, sign, buildNumber, calcular
+        clear, clearLastInput, sign, buildNumber, btnEqual
     } = methodsCalculator;
 
       return (
@@ -57,7 +57,7 @@ export const Buttons = ({ methodsCalculator }:Props) => {
             <View style={ styles.row }>
                 <ButtonCalc color='#2d2d2d' textColor='#fff' text={'0'} action={ buildNumber } width />
                 <ButtonCalc color='#2d2d2d' textColor='#fff' text={'.'} action={ buildNumber } />
-                <ButtonCalc color='#ff9427' textColor='#fff' text={'='} action={calcular} />
+                <ButtonCalc color='#ff9427' textColor='#fff' text={'='} action={btnEqual} />
             </View>
         </View>
 
